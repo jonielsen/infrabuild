@@ -1,11 +1,11 @@
-variable "client_id" {
+#variable "client_id" {
 #    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
-}
-variable "client_secret" {
+#}
+#variable "client_secret" {
 #    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
-}
+#}
 
 variable "resource_group_name" {
     default = "k8s"
