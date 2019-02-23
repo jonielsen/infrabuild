@@ -1,3 +1,13 @@
+variable "client_id" {
+    default = "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+
+}
+variable "client_secret" {
+    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+}
+
+
 
 variable "resource_group_name" {
     default = "k8s"
