@@ -13,7 +13,7 @@ resource "azurerm_resource_group" "k8s" {
 }
 
 resource "azurerm_virtual_network" "vnet1" {
-  name                = "${var.resource_group}-vnet1"
+  name                = "${var.resource_group_name}-vnet1"
   location            = "${var.location}"
   address_space       = ["10.0.0.0/16"]
   resource_group_name = "${azurerm_resource_group.k8s.name}"
@@ -54,14 +54,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     resource_group_name = "${azurerm_resource_group.k8s.name}"
     dns_prefix          = "${var.dns_prefix}"
 
-    linux_profile {
-        admin_username = "ubuntu"
-
-        ssh_key {
-            key_data = "${file("${var.ssh_public_key}")}"
-        }
-    }
-
     agent_pool_profile {
         name            = "agentpool"
         count           = "${var.agent_count}"
@@ -69,7 +61,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         os_type         = "Linux"
         os_disk_size_gb = 30
 
-        vnet_subnet_id = "${data.azurerm_subnet.subnet.id}"
+        vnet_subnet_id = "${azurerm_subnet.internal.id}"
     }
 
     service_principal {
