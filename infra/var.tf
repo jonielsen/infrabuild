@@ -1,9 +1,9 @@
 variable "client_id" {
-    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 }
 variable "client_secret" {
-    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#    default = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 }
 
