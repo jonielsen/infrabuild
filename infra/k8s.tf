@@ -70,7 +70,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
 
     network_profile {
-        network_plugin     = "Azure"
+        network_plugin     = "azure"
         service_cidr       = "10.240.0.0/16"
         docker_bridge_cidr = "172.17.0.1/16"
         dns_service_ip     = "10.0.0.10"
