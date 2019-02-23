@@ -1,3 +1,12 @@
+terraform {
+  backend "azurerm" {
+    storage_account_name  = "cs437c2e37709bcx405exabb"
+    container_name        = "k8s"
+    key                   = "terraform.tfstate"
+  }
+}
+
+
 resource "azurerm_resource_group" "k8s" {
     name     = "${var.resource_group_name}"
     location = "${var.location}"
