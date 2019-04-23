@@ -1,13 +1,13 @@
 terraform {
   backend "azurerm" {
     storage_account_name  = "cs437c2e37709bcx405exabb"
-    container_name        = "k8s"
+    container_name        = "k8smtc"
     key                   = "terraform.tfstate"
   }
 }
 
 
-resource "azurerm_resource_group" "k8s" {
+resource "azurerm_resource_group" "k8smtc" {
     name     = "${var.resource_group_name}"
     location = "${var.location}"
 }
@@ -15,14 +15,14 @@ resource "azurerm_resource_group" "k8s" {
 resource "azurerm_virtual_network" "vnet1" {
   name                = "${var.resource_group_name}-vnet1"
   location            = "${var.location}"
-  address_space       = ["10.0.0.0/16"]
-  resource_group_name = "${azurerm_resource_group.k8s.name}"
+  address_space       = ["10.1.0.0/16"]
+  resource_group_name = "${azurerm_resource_group.k8smtc.name}"
 
 }
 
 resource "azurerm_subnet" "internal" {
   name                 = "internal"
-  resource_group_name  = "${azurerm_resource_group.k8s.name}"
+  resource_group_name  = "${azurerm_resource_group.k8smtc.name}"
   virtual_network_name = "${azurerm_virtual_network.vnet1.name}"
   address_prefix       = "10.0.1.0/24"
 }
@@ -31,14 +31,14 @@ resource "azurerm_subnet" "internal" {
 resource "azurerm_log_analytics_workspace" "test" {
     name                = "${var.log_analytics_workspace_name}"
     location            = "${var.log_analytics_workspace_location}"
-    resource_group_name = "${azurerm_resource_group.k8s.name}"
+    resource_group_name = "${azurerm_resource_group.k8smtc.name}"
     sku                 = "${var.log_analytics_workspace_sku}"
 }
 
 resource "azurerm_log_analytics_solution" "test" {
     solution_name         = "ContainerInsights"
     location              = "${azurerm_log_analytics_workspace.test.location}"
-    resource_group_name   = "${azurerm_resource_group.k8s.name}"
+    resource_group_name   = "${azurerm_resource_group.k8smtc.name}"
     workspace_resource_id = "${azurerm_log_analytics_workspace.test.id}"
     workspace_name        = "${azurerm_log_analytics_workspace.test.name}"
 
@@ -51,7 +51,7 @@ resource "azurerm_log_analytics_solution" "test" {
 resource "azurerm_kubernetes_cluster" "k8s" {
     name                = "${var.cluster_name}"
     location            = "${azurerm_resource_group.k8s.location}"
-    resource_group_name = "${azurerm_resource_group.k8s.name}"
+    resource_group_name = "${azurerm_resource_group.k8smtc.name}"
     dns_prefix          = "${var.dns_prefix}"
 
     agent_pool_profile {
